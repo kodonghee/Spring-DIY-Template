@@ -1,5 +1,6 @@
 package com.diy.framework.web.mvc.handler;
 
+import com.diy.framework.web.beans.annotation.Controller;
 import com.diy.framework.web.beans.factory.BeanFactory;
 import com.diy.framework.web.mvc.annotation.RequestMapping;
 import com.diy.framework.web.mvc.annotation.RequestMethod;
@@ -23,6 +24,10 @@ public class AnnotationHandlerMapping implements HandlerMapping{
     public void initialize() {
         for (Object bean : beanFactory.getBeans().values()) {
             Class<?> clazz = bean.getClass();
+
+            if (!clazz.isAnnotationPresent(Controller.class)) {
+                continue;
+            }
 
             for (Method method : clazz.getDeclaredMethods()) {
 
